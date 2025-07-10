@@ -377,6 +377,11 @@ h3 {
     box-shadow: var(--shadow-medium);
 }
 
+.social-link.email:hover {
+    border-color: var(--accent-coral);
+    color: var(--accent-coral);
+}
+
 .social-link.linkedin:hover {
     border-color: var(--accent-blue);
     color: var(--accent-blue);
