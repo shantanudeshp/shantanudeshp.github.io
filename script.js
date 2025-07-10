@@ -2,9 +2,8 @@
 const themeToggleBtn = document.getElementById('theme-toggle-btn');
 const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
 
-// Check for saved theme preference or use system preference
-const currentTheme = localStorage.getItem('theme') || 
-    (prefersDarkScheme.matches ? 'dark' : 'light');
+// Check for saved theme preference or default to light mode
+const currentTheme = localStorage.getItem('theme') || 'light';
 
 // Apply the theme
 document.body.setAttribute('data-theme', currentTheme);
@@ -16,71 +15,142 @@ themeToggleBtn.addEventListener('click', () => {
     localStorage.setItem('theme', newTheme);
 });
 
-// Smooth scroll for anchor links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
-        }
-    });
-});
+// Tab functionality
+const tabButtons = document.querySelectorAll('.tab-btn');
+const tabPanels = document.querySelectorAll('.tab-panel');
 
-// Add hover effect to project cards
-document.querySelectorAll('.project-card').forEach(card => {
-    card.addEventListener('mouseenter', () => {
-        card.style.transform = 'translateY(-4px)';
-    });
+function showTab(targetTab) {
+    // Remove active class from all tabs and panels
+    tabButtons.forEach(btn => btn.classList.remove('active'));
+    tabPanels.forEach(panel => panel.classList.remove('active'));
     
-    card.addEventListener('mouseleave', () => {
-        card.style.transform = 'translateY(0)';
-    });
-});
-
-// Form submission handling
-const contactForm = document.getElementById('contact-form');
-if (contactForm) {
-    contactForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        // Get form data
-        const formData = new FormData(this);
-        const data = Object.fromEntries(formData);
-        
-        // Here you would typically send the data to a server
-        // For now, we'll just log it and show a success message
-        console.log('Form submitted:', data);
-        
-        // Show success message
-        alert('Thank you for your message! I will get back to you soon.');
-        
-        // Reset form
-        this.reset();
-    });
+    // Add active class to clicked tab and corresponding panel
+    const activeButton = document.querySelector(`[data-tab="${targetTab}"]`);
+    const activePanel = document.getElementById(targetTab);
+    
+    if (activeButton && activePanel) {
+        activeButton.classList.add('active');
+        activePanel.classList.add('active');
+    }
 }
 
-// Add active class to navigation links on scroll
-window.addEventListener('scroll', () => {
-    const sections = document.querySelectorAll('section');
-    const navLinks = document.querySelectorAll('.nav-links a');
+// Tab click handlers
+tabButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        const targetTab = button.getAttribute('data-tab');
+        showTab(targetTab);
+        
+        // Update URL hash without scrolling
+        history.replaceState(null, null, `#${targetTab}`);
+    });
+});
+
+// Handle initial tab based on URL hash
+document.addEventListener('DOMContentLoaded', () => {
+    const hash = window.location.hash.substring(1);
+    const validTabs = ['about', 'work', 'thoughts', 'connect'];
     
-    let current = '';
+    if (hash && validTabs.includes(hash)) {
+        showTab(hash);
+    } else {
+        showTab('about'); // Default tab
+    }
+});
+
+// Handle browser back/forward buttons
+window.addEventListener('popstate', () => {
+    const hash = window.location.hash.substring(1);
+    const validTabs = ['about', 'work', 'thoughts', 'connect'];
     
-    sections.forEach(section => {
-        const sectionTop = section.offsetTop;
-        if (pageYOffset >= sectionTop - 60) {
-            current = section.getAttribute('id');
-        }
+    if (hash && validTabs.includes(hash)) {
+        showTab(hash);
+    } else {
+        showTab('about');
+    }
+});
+
+// Smooth animations for skill tags
+document.querySelectorAll('.skill-tag').forEach(tag => {
+    tag.addEventListener('mouseenter', () => {
+        tag.style.transform = 'translateX(4px) scale(1.02)';
     });
     
-    navLinks.forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('href').slice(1) === current) {
-            link.classList.add('active');
+    tag.addEventListener('mouseleave', () => {
+        tag.style.transform = 'translateX(0) scale(1)';
+    });
+});
+
+// Enhanced hover effects for cards
+document.querySelectorAll('.section-block').forEach(block => {
+    block.addEventListener('mouseenter', () => {
+        block.style.transform = 'translateY(-3px)';
+    });
+    
+    block.addEventListener('mouseleave', () => {
+        block.style.transform = 'translateY(0)';
+    });
+});
+
+// Social link hover effects
+document.querySelectorAll('.social-link').forEach(link => {
+    link.addEventListener('mouseenter', () => {
+        link.style.transform = 'translateY(-2px) scale(1.02)';
+    });
+    
+    link.addEventListener('mouseleave', () => {
+        link.style.transform = 'translateY(0) scale(1)';
+    });
+});
+
+// Keyboard navigation for tabs
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+        const activeTab = document.querySelector('.tab-btn.active');
+        const allTabs = Array.from(tabButtons);
+        const currentIndex = allTabs.indexOf(activeTab);
+        
+        let newIndex;
+        if (e.key === 'ArrowLeft') {
+            newIndex = currentIndex > 0 ? currentIndex - 1 : allTabs.length - 1;
+        } else {
+            newIndex = currentIndex < allTabs.length - 1 ? currentIndex + 1 : 0;
+        }
+        
+        const newTab = allTabs[newIndex].getAttribute('data-tab');
+        showTab(newTab);
+        history.replaceState(null, null, `#${newTab}`);
+    }
+});
+
+// Add focus management for accessibility
+tabButtons.forEach(button => {
+    button.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            button.click();
         }
     });
-}); 
+});
+
+// Lazy loading animation for tab content
+const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '20px'
+};
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+        }
+    });
+}, observerOptions);
+
+// Observe all section blocks
+document.querySelectorAll('.section-block').forEach(block => {
+    block.style.opacity = '0';
+    block.style.transform = 'translateY(20px)';
+    block.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    observer.observe(block);
+});
