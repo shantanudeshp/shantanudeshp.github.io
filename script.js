@@ -154,3 +154,112 @@ document.querySelectorAll('.section-block').forEach(block => {
     block.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
     observer.observe(block);
 });
+
+// Chatbot functionality
+class Chatbot {
+    constructor() {
+        this.container = document.getElementById('chatbot-container');
+        this.toggle = document.getElementById('chatbot-toggle');
+        this.close = document.getElementById('chatbot-close');
+        this.messages = document.getElementById('chatbot-messages');
+        this.input = document.getElementById('chatbot-input');
+        this.send = document.getElementById('chatbot-send');
+        this.typing = document.getElementById('chatbot-typing');
+        
+        this.isOpen = false;
+        this.apiUrl = 'https://your-chatbot-api.vercel.app/api/chat'; // You'll replace this
+        
+        this.init();
+    }
+    
+    init() {
+        this.toggle.addEventListener('click', () => this.toggleChat());
+        this.close.addEventListener('click', () => this.closeChat());
+        this.send.addEventListener('click', () => this.sendMessage());
+        this.input.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') this.sendMessage();
+        });
+        
+        // Add welcome message
+        this.addMessage('Hi! I\'m Shantanu\'s AI assistant. Ask me about his work, experience, or anything else!', 'bot');
+    }
+    
+    toggleChat() {
+        if (this.isOpen) {
+            this.closeChat();
+        } else {
+            this.openChat();
+        }
+    }
+    
+    openChat() {
+        this.container.classList.remove('chatbot-hidden');
+        this.isOpen = true;
+        this.input.focus();
+    }
+    
+    closeChat() {
+        this.container.classList.add('chatbot-hidden');
+        this.isOpen = false;
+    }
+    
+    addMessage(text, sender) {
+        const message = document.createElement('div');
+        message.className = `message ${sender}`;
+        message.textContent = text;
+        this.messages.appendChild(message);
+        this.messages.scrollTop = this.messages.scrollHeight;
+    }
+    
+    showTyping() {
+        this.typing.classList.remove('typing-hidden');
+    }
+    
+    hideTyping() {
+        this.typing.classList.add('typing-hidden');
+    }
+    
+    async sendMessage() {
+        const text = this.input.value.trim();
+        if (!text) return;
+        
+        // Add user message
+        this.addMessage(text, 'user');
+        this.input.value = '';
+        this.send.disabled = true;
+        
+        // Show typing indicator
+        this.showTyping();
+        
+        try {
+            const response = await fetch(this.apiUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ message: text })
+            });
+            
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            
+            const data = await response.json();
+            this.hideTyping();
+            this.addMessage(data.response, 'bot');
+            
+        } catch (error) {
+            this.hideTyping();
+            this.addMessage('Sorry, I\'m having trouble connecting right now. Please try again later!', 'bot');
+            console.error('Chatbot error:', error);
+        }
+        
+        this.send.disabled = false;
+        this.input.focus();
+    }
+}
+
+// Initialize chatbot when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    new Chatbot();
+});
