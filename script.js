@@ -167,7 +167,7 @@ class Chatbot {
         this.typing = document.getElementById('chatbot-typing');
         
         this.isOpen = false;
-        this.apiUrl = 'https://your-chatbot-api.vercel.app/api/chat'; // You'll replace this
+        this.apiUrl = 'https://chatbot-q169tlptc-shantanus-projects-a40733a8.vercel.app/api/chat';
         
         this.init();
     }
