@@ -167,7 +167,6 @@ class Chatbot {
         this.typing = document.getElementById('chatbot-typing');
         
         this.isOpen = false;
-        this.apiUrl = 'https://chatbot-q169tlptc-shantanus-projects-a40733a8.vercel.app/api/chat';
         
         this.init();
     }
@@ -181,7 +180,7 @@ class Chatbot {
         });
         
         // Add welcome message
-        this.addMessage('Hi! I\'m Shantanu\'s AI assistant. Ask me about his work, experience, or anything else!', 'bot');
+        this.addMessage('Hi! I\'m Shantanu\'s AI mini-me. I\'m currently being set up - thanks for your patience! In the meantime, feel free to check out his work experience and connect with him via email or LinkedIn.', 'bot');
     }
     
     toggleChat() {
@@ -231,28 +230,11 @@ class Chatbot {
         // Show typing indicator
         this.showTyping();
         
-        try {
-            const response = await fetch(this.apiUrl, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ message: text })
-            });
-            
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            
-            const data = await response.json();
+        // Simulate typing delay for better UX
+        setTimeout(() => {
             this.hideTyping();
-            this.addMessage(data.response, 'bot');
-            
-        } catch (error) {
-            this.hideTyping();
-            this.addMessage('Sorry, I\'m having trouble connecting right now. Please try again later!', 'bot');
-            console.error('Chatbot error:', error);
-        }
+            this.addMessage("Thanks for your message! I'm still learning about Shantanu. For now, check out his experience above or reach out via email!", 'bot');
+        }, 1500);
         
         this.send.disabled = false;
         this.input.focus();
