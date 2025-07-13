@@ -180,7 +180,7 @@ class Chatbot {
         });
         
         // Add welcome message
-        this.addMessage('Hey! I\'m Shantanu\'s AI mini-me. Ask me about my experiences at QuinStreet, General Analysis, or what I do for fun!', 'bot');
+        this.addMessage('hey! i\'m shantanu\'s ai mini-me. ask me about my experiences at quinstreet, general analysis, or what i do for fun!', 'bot');
     }
     
     toggleChat() {
