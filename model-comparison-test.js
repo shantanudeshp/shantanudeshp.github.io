@@ -90,12 +90,14 @@ async function compareModels() {
     'https://shantanudeshp-github-nekenwqgc-shantanus-projects-a40733a8.vercel.app/api/chat'
   );
   
-  // We'll need to create a separate endpoint for 3.3-70b or modify the existing one
-  console.log('\n⚠️  To test Llama 3.3 70B, we need to create a separate API endpoint or modify the existing one.');
-  console.log('For now, generating Scout-only report...');
+  // Test Llama 3.3 70B model
+  const llama33Results = await testModel(
+    'Llama-3.3-70B',
+    'https://shantanudeshp-github-nekenwqgc-shantanus-projects-a40733a8.vercel.app/api/chat-llama33'
+  );
   
   // Generate comparison report
-  const report = generateComparisonReport(scoutResults, null, timestamp);
+  const report = generateComparisonReport(scoutResults, llama33Results, timestamp);
   const filename = `model-comparison-${timestamp.replace(/[:.]/g, '-')}.md`;
   fs.writeFileSync(filename, report);
   
@@ -103,7 +105,7 @@ async function compareModels() {
   const dataFilename = `model-comparison-data-${timestamp.replace(/[:.]/g, '-')}.json`;
   fs.writeFileSync(dataFilename, JSON.stringify({
     scout: scoutResults,
-    llama33: null,
+    llama33: llama33Results,
     timestamp
   }, null, 2));
   
@@ -145,15 +147,32 @@ function generateComparisonReport(scoutResults, llama33Results, timestamp) {
     report += `- **Total Tests:** ${scoutResults.length}\n\n`;
   }
   
+  if (llama33Results) {
+    const successful = llama33Results.filter(r => r.status === 200);
+    const avgResponseTime = successful.reduce((sum, r) => sum + r.responseTime, 0) / successful.length;
+    const avgWordCount = successful.reduce((sum, r) => sum + r.wordCount, 0) / successful.length;
+    
+    report += `## Llama-3.3-70B Results\n\n`;
+    report += `- **Success Rate:** ${((successful.length / llama33Results.length) * 100).toFixed(1)}%\n`;
+    report += `- **Avg Response Time:** ${avgResponseTime.toFixed(0)}ms\n`;
+    report += `- **Avg Response Length:** ${avgWordCount.toFixed(1)} words\n`;
+    report += `- **Total Tests:** ${llama33Results.length}\n\n`;
+  }
+  
   report += `## Detailed Responses\n\n`;
   
   scoutResults.forEach((result, index) => {
     report += `### ${index + 1}. "${result.question}"\n\n`;
     report += `**Scout Response:** ${result.response}\n\n`;
-    report += `- Words: ${result.wordCount}\n`;
-    report += `- Response Time: ${result.responseTime}ms\n`;
-    report += `- Status: ${result.status}\n\n`;
-    report += `---\n\n`;
+    if (llama33Results && llama33Results[index]) {
+      report += `**Llama 3.3 Response:** ${llama33Results[index].response}\n\n`;
+    }
+    report += `**Comparison:**\n`;
+    report += `- Scout: ${result.wordCount} words, ${result.responseTime}ms\n`;
+    if (llama33Results && llama33Results[index]) {
+      report += `- Llama 3.3: ${llama33Results[index].wordCount} words, ${llama33Results[index].responseTime}ms\n`;
+    }
+    report += `\n---\n\n`;
   });
   
   return report;
