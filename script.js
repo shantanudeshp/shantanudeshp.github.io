@@ -230,11 +230,28 @@ class Chatbot {
         // Show typing indicator
         this.showTyping();
         
-        // Simulate typing delay for better UX
-        setTimeout(() => {
+        try {
+            const response = await fetch('/api/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ message: text })
+            });
+            
+            const data = await response.json();
+            
             this.hideTyping();
-            this.addMessage("Thanks for your message! I'm still learning about Shantanu. For now, check out his experience above or reach out via email!", 'bot');
-        }, 1500);
+            
+            if (response.ok) {
+                this.addMessage(data.message, 'bot');
+            } else {
+                this.addMessage(data.message || 'Sorry, I encountered an error. Please try again.', 'bot');
+            }
+        } catch (error) {
+            this.hideTyping();
+            this.addMessage('Sorry, I\'m having trouble connecting right now. Please try again later.', 'bot');
+        }
         
         this.send.disabled = false;
         this.input.focus();
