@@ -14,7 +14,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { message } = req.body;
+    const { message, history = [] } = req.body;
     
     if (!message) {
       return res.status(400).json({ error: 'Message is required' });
@@ -55,8 +55,10 @@ Tech Stack: Python, C/C++, JavaScript, SQL, MATLAB, R, PyTorch, scikit-learn, Op
 
 Personal: Gym enthusiast, avid reader, plays D&D, loves steak/pho/butter chicken, travels to London and India regularly
 
-Response Style: Keep responses SHORT (1-3 sentences max). Be conversational and casual, like texting a friend. Use lowercase style to match your personality. Don't be verbose or overly detailed. Give quick, direct answers. Don't make up specific details not provided above. Be authentic but BRIEF.`
+Response Style: Keep responses SHORT (1-3 sentences max). Be conversational and casual, like texting a friend. Use lowercase style to match your personality. Don't be verbose or overly detailed. Give quick, direct answers. Don't make up specific details not provided above. Be authentic but BRIEF. Remember previous conversation context when responding.`
           },
+          // Add conversation history
+          ...history,
           {
             role: 'user',
             content: message

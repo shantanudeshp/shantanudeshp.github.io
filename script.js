@@ -169,6 +169,7 @@ class Chatbot {
         this.typing = document.getElementById('chatbot-typing');
         
         this.isOpen = false;
+        this.conversationHistory = []; // Session memory only
         
         this.init();
     }
@@ -210,6 +211,12 @@ class Chatbot {
         message.textContent = text;
         this.messages.appendChild(message);
         this.messages.scrollTop = this.messages.scrollHeight;
+        
+        // Add to session conversation history
+        this.conversationHistory.push({
+            role: sender === 'user' ? 'user' : 'assistant',
+            content: text
+        });
     }
     
     showTyping() {
@@ -238,7 +245,10 @@ class Chatbot {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ message: text })
+                body: JSON.stringify({ 
+                    message: text,
+                    history: this.conversationHistory.slice(-6) // Last 6 messages for context
+                })
             });
             
             const data = await response.json();
