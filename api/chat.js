@@ -62,10 +62,9 @@ Response Style: Be conversational, helpful, and authentic. Sound like a smart co
             content: message
           }
         ],
-        max_tokens: 200,
+        max_completion_tokens: 200,
         temperature: 0.3,
-        top_p: 0.9,
-        frequency_penalty: 0.1
+        top_p: 0.9
       })
     });
 
