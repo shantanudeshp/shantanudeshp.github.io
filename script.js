@@ -180,7 +180,7 @@ class Chatbot {
         });
         
         // Add welcome message
-        this.addMessage('Hi! I\'m Shantanu\'s AI mini-me. I\'m currently being set up - thanks for your patience! In the meantime, feel free to check out his work experience and connect with him via email or LinkedIn.', 'bot');
+        this.addMessage('Hey! I\'m Shantanu\'s AI mini-me. Ask me about my experiences at QuinStreet, General Analysis, or what I do for fun!', 'bot');
     }
     
     toggleChat() {
