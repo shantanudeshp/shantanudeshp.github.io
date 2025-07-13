@@ -102,24 +102,26 @@ document.querySelectorAll('.social-link').forEach(link => {
     });
 });
 
-// Keyboard navigation for tabs
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
-        const activeTab = document.querySelector('.tab-btn.active');
-        const allTabs = Array.from(tabButtons);
-        const currentIndex = allTabs.indexOf(activeTab);
-        
-        let newIndex;
-        if (e.key === 'ArrowLeft') {
-            newIndex = currentIndex > 0 ? currentIndex - 1 : allTabs.length - 1;
-        } else {
-            newIndex = currentIndex < allTabs.length - 1 ? currentIndex + 1 : 0;
+// Keyboard navigation for tabs (only when tab buttons are focused)
+tabButtons.forEach(button => {
+    button.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+            e.preventDefault();
+            const allTabs = Array.from(tabButtons);
+            const currentIndex = allTabs.indexOf(button);
+            
+            let newIndex;
+            if (e.key === 'ArrowLeft') {
+                newIndex = currentIndex > 0 ? currentIndex - 1 : allTabs.length - 1;
+            } else {
+                newIndex = currentIndex < allTabs.length - 1 ? currentIndex + 1 : 0;
+            }
+            
+            const newTab = allTabs[newIndex];
+            newTab.focus();
+            newTab.click();
         }
-        
-        const newTab = allTabs[newIndex].getAttribute('data-tab');
-        showTab(newTab);
-        history.replaceState(null, null, `#${newTab}`);
-    }
+    });
 });
 
 // Add focus management for accessibility
@@ -231,7 +233,7 @@ class Chatbot {
         this.showTyping();
         
         try {
-            const response = await fetch('https://shantanudeshp-github-io-git-8fd346-shantanus-projects-a40733a8.vercel.app/api/chat', {
+            const response = await fetch('https://shantanudeshp-github-nekenwqgc-shantanus-projects-a40733a8.vercel.app/api/chat', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
