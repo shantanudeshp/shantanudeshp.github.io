@@ -1,0 +1,149 @@
+[
+  {
+    "question": "tell me about your work at quinstreet",
+    "response": "ERROR: Unexpected token '<', \"<!doctype \"... is not valid JSON",
+    "status": "error",
+    "timestamp": "2025-07-13T09:34:13.699Z",
+    "responseTime": null
+  },
+  {
+    "question": "what did you do at general analysis?",
+    "response": "ERROR: Unexpected token '<', \"<!doctype \"... is not valid JSON",
+    "status": "error",
+    "timestamp": "2025-07-13T09:34:13.795Z",
+    "responseTime": null
+  },
+  {
+    "question": "describe your ancova capital internship",
+    "response": "ERROR: Unexpected token '<', \"<!doctype \"... is not valid JSON",
+    "status": "error",
+    "timestamp": "2025-07-13T09:34:13.829Z",
+    "responseTime": null
+  },
+  {
+    "question": "what's your research experience?",
+    "response": "ERROR: Unexpected token '<', \"<!doctype \"... is not valid JSON",
+    "status": "error",
+    "timestamp": "2025-07-13T09:34:13.880Z",
+    "responseTime": null
+  },
+  {
+    "question": "what programming languages do you know?",
+    "response": "ERROR: Unexpected token '<', \"<!doctype \"... is not valid JSON",
+    "status": "error",
+    "timestamp": "2025-07-13T09:34:13.948Z",
+    "responseTime": null
+  },
+  {
+    "question": "what's your favorite tech stack?",
+    "response": "ERROR: Unexpected token '<', \"<!doctype \"... is not valid JSON",
+    "status": "error",
+    "timestamp": "2025-07-13T09:34:13.982Z",
+    "responseTime": null
+  },
+  {
+    "question": "tell me about your projects",
+    "response": "ERROR: Unexpected token '<', \"<!doctype \"... is not valid JSON",
+    "status": "error",
+    "timestamp": "2025-07-13T09:34:14.031Z",
+    "responseTime": null
+  },
+  {
+    "question": "what AI/ML experience do you have?",
+    "response": "ERROR: Unexpected token '<', \"<!doctype \"... is not valid JSON",
+    "status": "error",
+    "timestamp": "2025-07-13T09:34:14.058Z",
+    "responseTime": null
+  },
+  {
+    "question": "what do you do for fun?",
+    "response": "ERROR: Unexpected token '<', \"<!doctype \"... is not valid JSON",
+    "status": "error",
+    "timestamp": "2025-07-13T09:34:14.084Z",
+    "responseTime": null
+  },
+  {
+    "question": "do you go to the gym?",
+    "response": "ERROR: Unexpected token '<', \"<!doctype \"... is not valid JSON",
+    "status": "error",
+    "timestamp": "2025-07-13T09:34:14.127Z",
+    "responseTime": null
+  },
+  {
+    "question": "what books do you read?",
+    "response": "ERROR: Unexpected token '<', \"<!doctype \"... is not valid JSON",
+    "status": "error",
+    "timestamp": "2025-07-13T09:34:14.167Z",
+    "responseTime": null
+  },
+  {
+    "question": "tell me about your food preferences",
+    "response": "ERROR: Unexpected token '<', \"<!doctype \"... is not valid JSON",
+    "status": "error",
+    "timestamp": "2025-07-13T09:34:14.209Z",
+    "responseTime": null
+  },
+  {
+    "question": "do you play any games?",
+    "response": "ERROR: Unexpected token '<', \"<!doctype \"... is not valid JSON",
+    "status": "error",
+    "timestamp": "2025-07-13T09:34:14.260Z",
+    "responseTime": null
+  },
+  {
+    "question": "what do you study at uc davis?",
+    "response": "ERROR: Unexpected token '<', \"<!doctype \"... is not valid JSON",
+    "status": "error",
+    "timestamp": "2025-07-13T09:34:14.299Z",
+    "responseTime": null
+  },
+  {
+    "question": "when do you graduate?",
+    "response": "ERROR: Unexpected token '<', \"<!doctype \"... is not valid JSON",
+    "status": "error",
+    "timestamp": "2025-07-13T09:34:14.348Z",
+    "responseTime": null
+  },
+  {
+    "question": "what classes have you taken?",
+    "response": "ERROR: Unexpected token '<', \"<!doctype \"... is not valid JSON",
+    "status": "error",
+    "timestamp": "2025-07-13T09:34:14.381Z",
+    "responseTime": null
+  },
+  {
+    "question": "hi",
+    "response": "ERROR: Unexpected token '<', \"<!doctype \"... is not valid JSON",
+    "status": "error",
+    "timestamp": "2025-07-13T09:34:14.441Z",
+    "responseTime": null
+  },
+  {
+    "question": "what's your name?",
+    "response": "ERROR: Unexpected token '<', \"<!doctype \"... is not valid JSON",
+    "status": "error",
+    "timestamp": "2025-07-13T09:34:14.470Z",
+    "responseTime": null
+  },
+  {
+    "question": "where are you from?",
+    "response": "ERROR: Unexpected token '<', \"<!doctype \"... is not valid JSON",
+    "status": "error",
+    "timestamp": "2025-07-13T09:34:14.581Z",
+    "responseTime": null
+  },
+  {
+    "question": "what's the weather like?",
+    "response": "ERROR: Unexpected token '<', \"<!doctype \"... is not valid JSON",
+    "status": "error",
+    "timestamp": "2025-07-13T09:34:14.614Z",
+    "responseTime": null
+  },
+  {
+    "question": "tell me a joke",
+    "response": "ERROR: Unexpected token '<', \"<!doctype \"... is not valid JSON",
+    "status": "error",
+    "timestamp": "2025-07-13T09:34:14.648Z",
+    "responseTime": null
+  }
+]
