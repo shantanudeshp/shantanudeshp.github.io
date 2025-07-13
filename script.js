@@ -231,7 +231,7 @@ class Chatbot {
         this.showTyping();
         
         try {
-            const response = await fetch('/api/chat', {
+            const response = await fetch('https://shantanudeshp-github-io-git-8fd346-shantanus-projects-a40733a8.vercel.app/api/chat', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
